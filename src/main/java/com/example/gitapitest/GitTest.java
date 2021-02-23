@@ -19,27 +19,25 @@ public class GitTest {
 
     public static void authentication() throws IOException {
 //        GitHubClient client = new GitHubClient("github.com").setCredentials("username", "password");
-        GitHubClient client = new GitHubClient("github.com").setOAuth2Token("token");
+        GitHubClient client = new GitHubClient("github.com").setOAuth2Token("33ad2a6fddceba1cf186865131a4bf2275c47c2d");
     }
 
     public static void repoServiceTest() throws IOException{
 
-//        RepositoryService repoService = new RepositoryService();
-//        for(Repository repo: repoService.getRepositories("david02653")){
-//            System.out.println(repo.getName() + " Watchers: " + repo.getWatchers());
+        RepositoryService repoService = new RepositoryService();
+        for(Repository repo: repoService.getRepositories("david02653")){
+            System.out.println(repo.getName() + " Watchers: " + repo.getWatchers());
 //            if(repo.getName().equals("apiTest")){
 //                System.out.println(repo.generateId());
 //            }
-//        }
+        }
 
-//        System.out.println();
-//
 //        Repository target = repoService.getRepository(new ApiTestRepo());
 //        System.out.println(target.getGitUrl());
 //        System.out.println(target.getDescription());
 //        System.out.println(target.getCloneUrl());
 
-//        GitHubClient client = new GitHubClient("github.com").setOAuth2Token("token");
+//        GitHubClient client = new GitHubClient("github.com").setOAuth2Token("33ad2a6fddceba1cf186865131a4bf2275c47c2d");
         RepositoryService repositoryService = new RepositoryService();
         Repository repo = repositoryService.getRepository(new ApiTestRepo());
         System.out.println(repo.getCloneUrl());
@@ -70,9 +68,15 @@ public class GitTest {
                 CommitService commitService = new CommitService();
 //                commitService.getCommits(repo);
                 for(RepositoryCommit repoCommit: commitService.getCommits(repo)){
+                    Commit commit = repoCommit.getCommit();
+                    System.out.print("> ");
                     System.out.println(repoCommit);
-                    System.out.println(repoCommit.getCommit());
-                    System.out.println(repoCommit.getCommit().getMessage());
+//                    System.out.println(repoCommit.getCommit());
+                    System.out.println(repositoryCommitContent(repoCommit));
+                    System.out.println(commit);
+//                    System.out.println(repoCommit.getCommit().getMessage());
+                    System.out.println(commitContent(commit));
+                    System.out.println();
                 }
             }
         }
@@ -85,5 +89,49 @@ public class GitTest {
 //        }
 
 
+    }
+
+    public static void dataService() throws IOException {
+        // TODO: test data service
+        /* EGit Data Service testing */
+        // create commit
+    }
+
+    public static void pullRequestTest() throws IOException {
+        // TODO: test pull request service
+        /* EGit Pull Request testing */
+    }
+
+    public static void issueService() throws IOException {
+        // TODO: test issue request service
+        /* EGit Issue Service testing */
+    }
+
+    // return given commit in String
+    public static String commitContent(Commit commit){
+        StringBuilder builder = new StringBuilder("");
+        builder.append("[Author]: " + commit.getAuthor() + "\n");
+        builder.append("[CommentCount]: " + commit.getCommentCount() + "\n");
+        builder.append("[Committer]: " + commit.getCommitter() + "\n");
+        builder.append("[Message]: " + commit.getMessage() + "\n");
+        builder.append("[Parents] : " + commit.getParents() + "\n");
+        builder.append("[Sha]: " + commit.getSha() + "\n");
+        builder.append("[Tree]: " + commit.getTree() + "\n");
+        builder.append("[Url]: " + commit.getUrl());
+        return builder.toString();
+    }
+
+    // return given Repository Commit in String
+    public static String repositoryCommitContent(RepositoryCommit commit){
+        StringBuilder builder = new StringBuilder("");
+        builder.append("[Author]: " + commit.getAuthor() + "\n");
+        builder.append("[Commit]: " + commit.getCommit() + "\n");
+        builder.append("[Committer]: " + commit.getCommitter() + "\n");
+        builder.append("[Files]: " + commit.getFiles() + "\n");
+        builder.append("[Parents] : " + commit.getParents() + "\n");
+        builder.append("[Sha]: " + commit.getSha() + "\n");
+        builder.append("[Stats]: " + commit.getStats() + "\n");
+        builder.append("[Url]: " + commit.getUrl());
+        return builder.toString();
     }
 }
