@@ -28,10 +28,24 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- egit dependency -->
         <dependency>
             <groupId>org.eclipse.mylyn.github</groupId>
             <artifactId>org.eclipse.egit.github.core</artifactId>
             <version>2.1.5</version>
+        </dependency>
+
+        <!-- kohsuke git dependency -->
+        <dependency>
+            <groupId>org.kohsuke</groupId>
+            <artifactId>github-api</artifactId>
+            <version>1.123</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

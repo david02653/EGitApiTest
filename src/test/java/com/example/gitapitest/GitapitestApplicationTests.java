@@ -21,4 +21,14 @@ class GitapitestApplicationTests {
         GitTest.commitService();
     }
 
+    @Test
+    public void testDataService() throws Exception{
+        GitTest.dataService();
+    }
+
+    @Test
+    public void testIssueService() throws Exception{
+        GitTest.issueService();
+    }
+
 }

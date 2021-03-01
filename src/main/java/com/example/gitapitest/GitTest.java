@@ -6,6 +6,8 @@ import org.eclipse.egit.github.core.*;
 import org.eclipse.egit.github.core.client.GitHubClient;
 import org.eclipse.egit.github.core.client.GitHubRequest;
 import org.eclipse.egit.github.core.service.CommitService;
+import org.eclipse.egit.github.core.service.DataService;
+import org.eclipse.egit.github.core.service.IssueService;
 import org.eclipse.egit.github.core.service.RepositoryService;
 
 import java.io.IOException;
@@ -19,7 +21,7 @@ public class GitTest {
 
     public static void authentication() throws IOException {
 //        GitHubClient client = new GitHubClient("github.com").setCredentials("username", "password");
-        GitHubClient client = new GitHubClient("github.com").setOAuth2Token("33ad2a6fddceba1cf186865131a4bf2275c47c2d");
+        GitHubClient client = new GitHubClient("github.com").setOAuth2Token("");
     }
 
     public static void repoServiceTest() throws IOException{
@@ -37,7 +39,7 @@ public class GitTest {
 //        System.out.println(target.getDescription());
 //        System.out.println(target.getCloneUrl());
 
-//        GitHubClient client = new GitHubClient("github.com").setOAuth2Token("33ad2a6fddceba1cf186865131a4bf2275c47c2d");
+//        GitHubClient client = new GitHubClient("github.com").setOAuth2Token("");
         RepositoryService repositoryService = new RepositoryService();
         Repository repo = repositoryService.getRepository(new ApiTestRepo());
         System.out.println(repo.getCloneUrl());
@@ -95,6 +97,24 @@ public class GitTest {
         // TODO: test data service
         /* EGit Data Service testing */
         // create commit
+        GitHubClient client = new GitHubClient("github.com").setOAuth2Token("");
+        client.setUserAgent("Mozilla/5.0 (X11; Linux i686; rv:7.0) Gecko/20101001 Firefox/36.0");
+        DataService dataService = new DataService(client);
+        RepositoryService repoService = new RepositoryService();
+        Repository repo = repoService.getRepository(new FibonacciRepo());
+        Repository apiRepo = repoService.getRepository(new ApiTestRepo());
+        CommitService commitService = new CommitService();
+        List<RepositoryCommit> rCommit = commitService.getCommits(repo);
+        Commit commit = rCommit.get(rCommit.size()-1).getCommit();
+
+//        CommitUser user = new CommitUser();
+//        user.setName("tester");
+//        user.setEmail("test.com");
+//        commit.setAuthor(user);
+//        commit.setCommitter(user);
+//        commit.setMessage("testing commit");
+//        commit.setAuthor();
+        dataService.createCommit(apiRepo, commit);
     }
 
     public static void pullRequestTest() throws IOException {
@@ -105,6 +125,10 @@ public class GitTest {
     public static void issueService() throws IOException {
         // TODO: test issue request service
         /* EGit Issue Service testing */
+        GitHubClient client = new GitHubClient("github.com").setOAuth2Token("").setUserAgent("Mozilla/5.0 (X11; Linux i686; rv:7.0) Gecko/20101001 Firefox/36.0");
+        IssueService issueService = new IssueService(client);
+        List<RepositoryIssue> issues = issueService.getIssues();
+        System.out.println(issues);
     }
 
     // return given commit in String
